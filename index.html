@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التسجيل | eWorld Global</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    font-family:'Cairo',Tahoma,sans-serif;
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    padding:22px 16px;
+    background:linear-gradient(135deg,#0f9b57 0%,#0a6b3d 55%,#053b21 100%);
+  }
+
+  .card{
+    width:100%; max-width:560px;
+    background:#ffffff;
+    border-radius:24px;
+    padding:32px 26px 30px;
+    box-shadow:0 24px 60px rgba(0,0,0,.32);
+    animation:pop .45s ease;
+  }
+  @keyframes pop{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+
+  /* ===== الترويسة ===== */
+  .head{text-align:center;margin-bottom:26px;}
+  .logo{
+    width:74px;height:74px;margin:0 auto 14px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#12b76a,#0a8a4f);
+    display:flex;align-items:center;justify-content:center;
+    font-size:26px;font-weight:800;color:#fff;
+    letter-spacing:1px;
+    box-shadow:0 10px 24px rgba(10,138,79,.35);
+  }
+  .head h1{font-size:22px;font-weight:800;color:#0b3d26;margin-bottom:6px;}
+  .head p{font-size:14px;color:#6b8579;font-weight:600;}
+
+  /* ===== الأزرار ===== */
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    width:100%;padding:16px 18px;
+    border-radius:15px;
+    font-family:inherit;font-size:16.5px;font-weight:700;
+    cursor:pointer;text-decoration:none;border:none;
+    transition:.25s;line-height:1.5;text-align:center;
+  }
+  .btn-official{
+    background:linear-gradient(135deg,#12b76a,#0a8a4f);
+    color:#fff;
+    box-shadow:0 10px 22px rgba(10,138,79,.35);
+  }
+  .btn-official:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(10,138,79,.45);}
+  .btn-official:active{transform:translateY(0);}
+
+  .btn-team{
+    background:#fff;color:#0a8a4f;
+    border:2px solid #12b76a;
+  }
+  .btn-team:hover{background:#f0fdf6;transform:translateY(-3px);}
+  .btn-team:active{transform:translateY(0);}
+
+  /* ===== فاصل "أو يمكن" ===== */
+  .sep{
+    display:flex;align-items:center;gap:14px;
+    margin:20px 0;
+    color:#8aa39a;font-size:14.5px;font-weight:700;
+  }
+  .sep::before,.sep::after{
+    content:'';flex:1;height:1.5px;
+    background:linear-gradient(to left,#e3ece7,transparent);
+  }
+  .sep::after{background:linear-gradient(to right,#e3ece7,transparent);}
+
+  /* ===== النموذج ===== */
+  .form-wrap{display:none;}
+  .form-wrap.show{display:block;animation:slideDown .45s ease;}
+  @keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+
+  .note{
+    background:#eafaf1;
+    border:1.5px dashed #12b76a;
+    color:#0a7a47;
+    border-radius:14px;
+    padding:13px 16px;
+    text-align:center;
+    font-weight:700;font-size:15.5px;
+    margin-bottom:22px;
+  }
+
+  .form-group{margin-bottom:16px;}
+  .form-group label{
+    display:block;font-size:14px;font-weight:700;
+    color:#0b3d26;margin-bottom:7px;
+  }
+  .form-group label .star{color:#e74c3c;}
+
+  .form-group input,
+  .form-group select{
+    width:100%;
+    padding:13px 14px;
+    border:1.6px solid #dfe7e2;
+    border-radius:12px;
+    font-family:inherit;font-size:15px;font-weight:600;
+    background:#f9fbfa;color:#123;
+    outline:none;transition:.2s;
+  }
+  .form-group input::placeholder{color:#a8b8b0;font-weight:500;}
+  .form-group input:focus,
+  .form-group select:focus{
+    border-color:#12b76a;background:#fff;
+    box-shadow:0 0 0 4px rgba(18,183,106,.13);
+  }
+
+  /* حالة الخطأ */
+  .form-group.error input,
+  .form-group.error select{
+    border-color:#e74c3c;background:#fff6f5;
+    box-shadow:0 0 0 4px rgba(231,76,60,.10);
+  }
+  .err-msg{
+    display:none;
+    color:#e74c3c;font-size:12.5px;font-weight:700;
+    margin-top:6px;
+  }
+  .form-group.error .err-msg{display:block;animation:fadeIn .25s;}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+  /* صف تاريخ الميلاد */
+  .dob{
+    display:grid;
+    grid-template-columns:1fr 1.35fr 1.15fr;
+    gap:9px;
+  }
+
+  /* ===== زر الإرسال ===== */
+  .btn-submit{
+    background:linear-gradient(135deg,#25D366,#128C7E);
+    color:#fff;
+    box-shadow:0 10px 22px rgba(18,140,126,.38);
+    margin-top:10px;
+  }
+  .btn-submit:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(18,140,126,.48);}
+  .btn-submit:active{transform:translateY(0);}
+
+  .hint{
+    text-align:center;font-size:12.5px;color:#8aa39a;
+    font-weight:600;margin-top:12px;line-height:1.7;
+  }
+
+  /* رسالة النجاح */
+  .success{
+    display:none;
+    margin-top:16px;
+    background:#eafaf1;border:1.5px solid #12b76a;
+    color:#0a7a47;border-radius:12px;
+    padding:12px;text-align:center;
+    font-weight:700;font-size:14px;
+  }
+  .success.show{display:block;animation:fadeIn .3s;}
+
+  /* ===== النافذة المنبثقة ===== */
+  .modal-overlay{
+    position:fixed; inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center; justify-content:center;
+    padding:20px; z-index:1000;
+    backdrop-filter:blur(3px);
+  }
+  .modal-overlay.show{
+    display:flex;
+    animation:fadeIn .25s;
+  }
+  .modal{
+    background:#fff;
+    border-radius:22px;
+    padding:34px 24px 26px;
+    width:100%; max-width:420px;
+    text-align:center;
+    position:relative;
+    animation:pop .35s ease;
+    box-shadow:0 24px 60px rgba(0,0,0,.35);
+  }
+  .modal h2{
+    font-size:20px; font-weight:800;
+    color:#0b3d26; margin-bottom:10px;
+  }
+  .modal p{
+    font-size:15px; color:#4a6b5c;
+    font-weight:600; line-height:1.7;
+    margin-bottom:18px;
+  }
+  .code-box{
+    background:#eafaf1;
+    border:2px dashed #12b76a;
+    border-radius:14px;
+    padding:16px;
+    font-size:28px; font-weight:800;
+    letter-spacing:4px;
+    color:#0a7a47;
+    margin-bottom:18px;
+    user-select:all;
+    direction:ltr;
+  }
+  .btn-copy{
+    background:linear-gradient(135deg,#12b76a,#0a8a4f);
+    color:#fff;
+    box-shadow:0 10px 22px rgba(10,138,79,.35);
+    margin-bottom:12px;
+  }
+  .btn-copy:hover{transform:translateY(-3px);}
+  .btn-copy.copied{
+    background:#0a7a47;
+    pointer-events:none;
+  }
+  .modal-close{
+    position:absolute;
+    top:12px; left:14px;
+    background:none; border:none;
+    font-size:26px; color:#8aa39a;
+    cursor:pointer; line-height:1;
+    padding:4px 8px; border-radius:8px;
+    transition:.2s;
+  }
+  .modal-close:hover{color:#e74c3c; background:#fef2f2;}
+
+  @media (max-width:420px){
+    .card{padding:26px 18px 24px;border-radius:20px;}
+    .head h1{font-size:19px;}
+    .btn{font-size:15px;padding:15px 12px;}
+    .dob{grid-template-columns:1fr 1fr 1fr;gap:7px;}
+    .code-box{font-size:24px;letter-spacing:3px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- الترويسة -->
+  <div class="head">
+    <div class="logo">eW</div>
+    <h1>التسجيل في eWorld Global</h1>
+    <p>اختر طريقة التسجيل المناسبة لك</p>
+  </div>
+
+  <!-- الزر الأول: التسجيل الرسمي -->
+  <button type="button" class="btn btn-official" id="officialBtn">
+    للتسجيل مباشرة عبر الموقع الرسمي
+  </button>
+
+  <!-- الفاصل -->
+  <div class="sep">أو يمكن</div>
+
+  <!-- الزر الثاني: التسجيل عبر الفريق -->
+  <button type="button" class="btn btn-team" id="teamBtn">
+    التسجيل مجاناً من خلال فريقنا
+  </button>
+
+  <!-- النموذج -->
+  <div class="form-wrap" id="formWrap">
+
+    <div class="note">يرجى تعبئة هذه البيانات</div>
+
+    <form id="regForm" novalidate>
+
+      <!-- الاسم الثلاثي -->
+      <div class="form-group">
+        <label for="fullName">الاسم الثلاثي <span class="star">*</span></label>
+        <input type="text" id="fullName" placeholder="مثال: محمد أحمد علي" autocomplete="name">
+        <span class="err-msg"></span>
+      </div>
+
+      <!-- رقم الهاتف -->
+      <div class="form-group">
+        <label for="phone">رقم الهاتف <span class="star">*</span></label>
+        <input type="tel" id="phone" placeholder="مثال: 733400760" inputmode="tel" autocomplete="tel">
+        <span class="err-msg"></span>
+      </div>
+
+      <!-- رقم الهوية أو جواز السفر -->
+      <div class="form-group">
+        <label for="nationalId">رقم الهوية أو جواز السفر <span class="star">*</span></label>
+        <input type="text" id="nationalId" placeholder="أدخل رقم الهوية أو رقم الجواز">
+        <span class="err-msg"></span>
+      </div>
+
+      <!-- البريد الإلكتروني -->
+      <div class="form-group">
+        <label for="email">البريد الإلكتروني <span class="star">*</span></label>
+        <input type="email" id="email" placeholder="example@email.com" autocomplete="email" dir="ltr" style="text-align:right;">
+        <span class="err-msg"></span>
+      </div>
+
+      <!-- تاريخ الميلاد -->
+      <div class="form-group" id="dobGroup">
+        <label>تاريخ الميلاد (يوم / شهر / سنة) <span class="star">*</span></label>
+        <div class="dob">
+          <select id="dobDay"><option value="">اليوم</option></select>
+          <select id="dobMonth"><option value="">الشهر</option></select>
+          <select id="dobYear"><option value="">السنة</option></select>
+        </div>
+        <span class="err-msg"></span>
+      </div>
+
+      <!-- العنوان -->
+      <div class="form-group">
+        <label for="country">البلد <span class="star">*</span></label>
+        <input type="text" id="country" placeholder="مثال: اليمن">
+        <span class="err-msg"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="city">المدينة <span class="star">*</span></label>
+        <input type="text" id="city" placeholder="مثال: صنعاء">
+        <span class="err-msg"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="street">الشارع <span class="star">*</span></label>
+        <input type="text" id="street" placeholder="مثال: شارع الزبيري">
+        <span class="err-msg"></span>
+      </div>
+
+      <!-- زر الإرسال -->
+      <button type="submit" class="btn btn-submit">تنفيذ وإرسال</button>
+
+      <p class="hint">سيتم فتح واتساب تلقائياً مع بياناتك جاهزة للإرسال</p>
+
+      <div class="success" id="successMsg">تم تجهيز بياناتك، أكمل الإرسال من واتساب</div>
+
+    </form>
+  </div>
+
+</div>
+
+<!-- ===== النافذة المنبثقة لرمز الدليل ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <h2>رمز الدليل</h2>
+    <p>يمكنكم نسخ رمز الدليل هذا واستخدامه في التسجيل.</p>
+    <div class="code-box" id="codeBox">830421026</div>
+    <button type="button" class="btn btn-copy" id="copyBtn">نسخ الرمز</button>
+    <a class="btn btn-official" id="goOfficial"
+       href="https://www.eworldglobal.com/index.php?r=account%2Fregister"
+       target="_blank" rel="noopener">
+      الانتقال إلى الموقع الرسمي
+    </a>
+  </div>
+</div>
+
+<script>
+/* ====== إعدادات ====== */
+const WHATSAPP_NUMBER = '967733400760'; // 967 = كود اليمن + الرقم بدون الصفر
+
+/* ====== تعبئة قوائم تاريخ الميلاد ====== */
+const daySel   = document.getElementById('dobDay');
+const monthSel = document.getElementById('dobMonth');
+const yearSel  = document.getElementById('dobYear');
+const monthsAr = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+
+for (let d = 1; d <= 31; d++) {
+  daySel.insertAdjacentHTML('beforeend', `<option value="${d}">${d}</option>`);
+}
+monthsAr.forEach((m, i) => {
+  monthSel.insertAdjacentHTML('beforeend', `<option value="${i + 1}">${m}</option>`);
+});
+const currentYear = new Date().getFullYear();
+for (let y = currentYear - 10; y >= 1930; y--) {
+  yearSel.insertAdjacentHTML('beforeend', `<option value="${y}">${y}</option>`);
+}
+
+/* ====== إظهار / إخفاء النموذج ====== */
+const teamBtn = document.getElementById('teamBtn');
+const formWrap = document.getElementById('formWrap');
+
+teamBtn.addEventListener('click', () => {
+  formWrap.classList.add('show');
+  setTimeout(() => {
+    formWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+});
+
+/* ====== النافذة المنبثقة لرمز الدليل ====== */
+const officialBtn = document.getElementById('officialBtn');
+const modalOverlay = document.getElementById('modalOverlay');
+const modalClose = document.getElementById('modalClose');
+const copyBtn = document.getElementById('copyBtn');
+const codeBox = document.getElementById('codeBox');
+
+officialBtn.addEventListener('click', () => {
+  modalOverlay.classList.add('show');
+});
+
+modalClose.addEventListener('click', () => {
+  modalOverlay.classList.remove('show');
+});
+
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target === modalOverlay) {
+    modalOverlay.classList.remove('show');
+  }
+});
+
+/* نسخ الرمز */
+copyBtn.addEventListener('click', () => {
+  const code = '830421026';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(showCopied).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+
+  function fallbackCopy() {
+    const ta = document.createElement('textarea');
+    ta.value = code;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      showCopied();
+    } catch (e) {
+      alert('تعذر النسخ، يرجى النسخ يدوياً');
+    }
+    document.body.removeChild(ta);
+  }
+
+  function showCopied() {
+    copyBtn.textContent = 'تم النسخ';
+    copyBtn.classList.add('copied');
+    setTimeout(() => {
+      copyBtn.textContent = 'نسخ الرمز';
+      copyBtn.classList.remove('copied');
+    }, 2000);
+  }
+});
+
+/* ====== أدوات الخطأ ====== */
+function markError(el, msg, groupEl) {
+  const g = groupEl || el.closest('.form-group');
+  g.classList.add('error');
+  const span = g.querySelector('.err-msg');
+  if (span) span.textContent = msg;
+}
+function clearAllErrors() {
+  document.querySelectorAll('.form-group').forEach(g => {
+    g.classList.remove('error');
+    const s = g.querySelector('.err-msg');
+    if (s) s.textContent = '';
+  });
+}
+
+/* ====== التحقق من البيانات ====== */
+function validateForm() {
+  clearAllErrors();
+  let firstError = null;
+  const flag = (el, msg, groupEl) => {
+    markError(el, msg, groupEl);
+    if (!firstError) firstError = groupEl || el.closest('.form-group');
+  };
+
+  // الاسم الثلاثي
+  const nameEl = document.getElementById('fullName');
+  const nameVal = nameEl.value.trim();
+  if (!nameVal) {
+    flag(nameEl, 'يرجى إدخال الاسم الثلاثي');
+  } else if (nameVal.split(/\s+/).length < 3) {
+    flag(nameEl, 'يرجى كتابة الاسم الثلاثي كاملاً (ثلاث كلمات على الأقل)');
+  }
+
+  // رقم الهاتف
+  const phoneEl = document.getElementById('phone');
+  const phoneVal = phoneEl.value.trim();
+  if (!phoneVal) {
+    flag(phoneEl, 'يرجى إدخال رقم الهاتف');
+  } else if (!/^[0-9+\-\s]{7,16}$/.test(phoneVal)) {
+    flag(phoneEl, 'رقم الهاتف غير صحيح');
+  }
+
+  // رقم الهوية / الجواز
+  const idEl = document.getElementById('nationalId');
+  if (!idEl.value.trim()) {
+    flag(idEl, 'يرجى إدخال رقم الهوية أو جواز السفر');
+  }
+
+  // البريد الإلكتروني
+  const emailEl = document.getElementById('email');
+  const emailVal = emailEl.value.trim();
+  if (!emailVal) {
+    flag(emailEl, 'يرجى إدخال البريد الإلكتروني');
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailVal)) {
+    flag(emailEl, 'البريد الإلكتروني غير صحيح');
+  }
+
+  // تاريخ الميلاد
+  const dobGroupEl = document.getElementById('dobGroup');
+  if (!daySel.value || !monthSel.value || !yearSel.value) {
+    flag(daySel, 'يرجى تحديد تاريخ الميلاد كاملاً (يوم / شهر / سنة)', dobGroupEl);
+  }
+
+  // العنوان
+  const countryEl = document.getElementById('country');
+  if (!countryEl.value.trim()) flag(countryEl, 'يرجى إدخال البلد');
+
+  const cityEl = document.getElementById('city');
+  if (!cityEl.value.trim()) flag(cityEl, 'يرجى إدخال المدينة');
+
+  const streetEl = document.getElementById('street');
+  if (!streetEl.value.trim()) flag(streetEl, 'يرجى إدخال الشارع');
+
+  // التمرير لأول حقل به خطأ
+  if (firstError) {
+    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const inp = firstError.querySelector('input, select');
+    if (inp) setTimeout(() => inp.focus({ preventScroll: true }), 350);
+    return false;
+  }
+  return true;
+}
+
+/* ====== بناء الرسالة وإرسالها عبر واتساب ====== */
+document.getElementById('regForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  if (!validateForm()) return; // لا يتم الانتقال إذا كانت البيانات ناقصة
+
+  const data = {
+    name:     document.getElementById('fullName').value.trim(),
+    phone:    document.getElementById('phone').value.trim(),
+    nid:      document.getElementById('nationalId').value.trim(),
+    email:    document.getElementById('email').value.trim(),
+    day:      daySel.value,
+    month:    monthSel.options[monthSel.selectedIndex].text,
+    year:     yearSel.value,
+    country:  document.getElementById('country').value.trim(),
+    city:     document.getElementById('city').value.trim(),
+    street:   document.getElementById('street').value.trim()
+  };
+
+  const message =
+`*طلب تسجيل جديد - eWorld Global*
+
+الاسم الثلاثي: ${data.name}
+رقم الهاتف: ${data.phone}
+رقم الهوية / جواز السفر: ${data.nid}
+البريد الإلكتروني: ${data.email}
+تاريخ الميلاد: ${data.day} / ${data.month} / ${data.year}
+العنوان:
+- البلد: ${data.country}
+- المدينة: ${data.city}
+- الشارع: ${data.street}
+
+تم إرسال الطلب من صفحة التسجيل.`;
+
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+  // إظهار رسالة نجاح
+  const success = document.getElementById('successMsg');
+  success.classList.add('show');
+  setTimeout(() => success.classList.remove('show'), 6000);
+
+  // فتح واتساب
+  window.open(url, '_blank');
+});
+</script>
+
+</body>
+</html>
